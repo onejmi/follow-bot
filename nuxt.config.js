@@ -31,13 +31,16 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    //composition api (vue 3 feature)
+    '@nuxtjs/composition-api'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
 
   //Server Middleware (ExpressJS Server)
@@ -63,6 +66,25 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
         }
+      }
+    }
+  },
+
+  auth: {
+    strategies: {
+      social: {
+        _scheme: 'oauth2',
+        authorization_endpoint: 'https://discord.com/api/oauth2/authorize',
+        userinfo_endpoint: 'https://discord.com/api/users/@me',
+        scope: ['identify', 'guilds'],
+        access_type: undefined,
+        access_token_endpoint: 'https://discord.com/api/oauth2/token',
+        response_type: 'token',
+        token_type: 'Bearer',
+        redirect_uri: undefined,
+        client_id: '764557927360102400',
+        token_key: 'access_token',
+        //TODO readup about state and implement it
       }
     }
   },
