@@ -4,18 +4,22 @@ import { handleMessage } from './handlers/message-handler'
 
 export default class DiscordManager {
     
-    private client: Client
+    private _client: Client
 
     constructor() {
-        this.client = new Client()
+        this._client = new Client()
     }
     
     login() {
         this.registerHandlers()
-        this.client.login(keys.discordToken)
+        this._client.login(keys.discordToken)
     }
 
     private registerHandlers() {
-        this.client.on('message', handleMessage)
+        this._client.on('message', handleMessage)
+    }
+
+    public get client() {
+        return this._client
     }
 }

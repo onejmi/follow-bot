@@ -71,6 +71,9 @@ export default {
   },
 
   auth: {
+    redirect: {
+      home: '/auth/login'
+    },
     strategies: {
       social: {
         _scheme: 'oauth2',

@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import * as controllers from './controllers';
 import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
+import DiscordManager from './discord/bot-manager';
 
 // MODIFIED VERSION OF 
 // (https://gist.githubusercontent.com/seanpmaxwell/fb58c95f0adc055403445e03f4f499fb/raw/543ce8f8669d88bbeebd53df84f2b101e9876798/ExampleServer.ts) by
@@ -10,12 +11,21 @@ import { Logger } from '@overnightjs/logger';
 class ApiServer extends Server {
 
     private readonly SERVER_STARTED = 'API server started on port: ';
+    private static discordManager : DiscordManager;
 
     constructor() {
         super(true);
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.setupControllers();
+    }
+
+    public static setDiscord(discordManager: DiscordManager) {
+        this.discordManager = discordManager;
+    }
+
+    public static getDiscord() : DiscordManager { 
+        return this.discordManager
     }
 
     private setupControllers(): void {

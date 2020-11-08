@@ -17,6 +17,7 @@
     "@nuxtjs/composition-api": "^0.13.5",
     "@overnightjs/core": "^1.7.5",
     "@overnightjs/logger": "^1.2.0",
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "discord.js": "^12.3.1",
     "express": "^4.17.1",
