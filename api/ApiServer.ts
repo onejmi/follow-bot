@@ -3,6 +3,7 @@ import * as controllers from './controllers';
 import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 import DiscordManager from './discord/bot-manager';
+import * as database from './data/database'
 
 // MODIFIED VERSION OF 
 // (https://gist.githubusercontent.com/seanpmaxwell/fb58c95f0adc055403445e03f4f499fb/raw/543ce8f8669d88bbeebd53df84f2b101e9876798/ExampleServer.ts) by
@@ -17,6 +18,7 @@ class ApiServer extends Server {
         super(true);
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: true}));
+        database.begin()
         this.setupControllers();
     }
 

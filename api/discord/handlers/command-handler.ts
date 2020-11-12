@@ -1,5 +1,4 @@
 import { Message, MessageEmbed } from 'discord.js';
-import * as database from '../../data/database';
 
 
 export async function handleCommand(message: Message, command: string, args: string[]) {
