@@ -4,17 +4,20 @@
 
 import { dbPassword, dbName, dbUser } from './credentials'
 import { MongoClient } from 'mongodb'
+import { FilterDataStore } from './filter-data'
 
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@cluster0.jlsao.mongodb.net/${dbName}?retryWrites=true&w=majority`
 let client = new MongoClient(uri, { useNewUrlParser: true })
 
-export async function getSession(key: string) {
+export const filterDataStore = new FilterDataStore(client)
+
+export async function getSessionId(key: string) {
     const session = await client.db().collection('sessions').findOne({ 'sessionId' : key })
     return session?.userId
 }
 
-export function setSession(key: string, userId: string) {
-    client.db()
+export async function setSession(key: string, userId: string) {
+    await client.db()
         .collection('sessions')
         .updateOne({ 'sessionId' : key }, { $set: { 'userId' : userId } }, { upsert: true })
 }
@@ -52,6 +55,7 @@ export async function follow(serverId: string, fromId: string, toId: string) {
         if(currFollowers !== undefined) {
             followMap[toId] = currFollowers.filter((id: string) => id !== fromId)
             setFollowMap(serverId, followMap)
+            filterDataStore.setChannels(fromId, toId, serverId, [])
         }
         return false
     }

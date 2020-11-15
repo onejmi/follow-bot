@@ -47,20 +47,78 @@
                     >
                     {{ followers.value.includes($auth.user.id) ? 'unfollow' : 'follow' }}
                     </v-btn>
+                    <v-btn 
+                    @click="filter.show = true"
+                    class="mt-6"
+                    :disabled="!followers.value.includes($auth.user.id)"
+                    icon>
+                        <v-icon>mdi-cog</v-icon>
+                    </v-btn>
                     </v-card-actions>
                 </v-card>
+                <v-dialog
+                v-model="filter.show"
+                width="300"
+                >
+                    <v-card
+                    height="500">
+                        <v-card-title>Listen to Channels</v-card-title>
+                        <v-card-text>
+                            <v-row justify="center" v-if="filter.loading">
+                                <v-progress-circular  
+                                color="blue" 
+                                indeterminate
+                                ></v-progress-circular>
+                            </v-row>
+                            <v-checkbox 
+                            v-else
+                            v-for="channel in filter.channels" 
+                            :key="channel.id"
+                            v-model="filter.selectedChannels"
+                            :label="channel.name"
+                            :value="channel.id"
+                            ></v-checkbox>
+                        </v-card-text>
+                        <v-card-actions class="ml-4">
+                            <v-btn color="success" @click="save">Save</v-btn>
+                            <v-btn color="error" @click="hide">Close</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
             </v-col>
         </v-row>
+        <v-snackbar
+        v-model="filter.snackbar"
+        timeout="1000"
+        >
+        Saved 🎉
+
+        <template v-slot:action="{ attrs }">
+            <v-btn
+            color="blue"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+            >
+            Close
+            </v-btn>
+        </template>
+        </v-snackbar>
     </v-container>
 </template>
 
 <script>
-import { useContext, useAsync, ref, computed, reactive } from '@nuxtjs/composition-api'
+import { useContext, useAsync, ref, computed, reactive, watchEffect, watch } from '@nuxtjs/composition-api'
 export default {
-    middleware: 'auth',
+    middleware: ['auth', 'session'],
     async validate({ params, $auth, $axios }) {
         //TODO change this to check server if valid user (and maybe if user is in the same server)
-        const token = $auth.getToken('social')
+        let token 
+        try {
+            token = $auth.getToken('social')
+        } catch(e) {
+            return false
+        }
         const headers =  { Authorization: token }
         const guilds = await $axios.$get('http://discord.com/api/users/@me/guilds', { headers })
         let hasGuild = false
@@ -81,6 +139,7 @@ export default {
     },
     setup() {
         //TODO create base url axios '/api/v1'
+        //TODO organize filters into categories
         const { route, $auth, $axios } = useContext()
         const params = route.value.params
         const profile = useAsync(async () => ref(await $axios.$get(`/api/v1/users/${params.server}/members/${params.id}`)))
@@ -90,6 +149,38 @@ export default {
         })
         const isFollowing = computed(() => followers.value != null && followers.value.value.includes($auth.user.id))
         const color = computed(() => isFollowing.value ? 'error' : 'purple')
+
+        const filter = reactive({
+            show: false,
+            channels: [],
+            selectedChannels: [],
+            snackbar: false,
+            loading: true
+        })
+
+        watchEffect(async () => {
+            if(filter.show) {
+                const headers = { Authorization: $auth.getToken('social')}
+                filter.channels = 
+                    await $axios.$get(`/api/v1/users/channels/access?server=${params.server}`, { headers })
+                filter.selectedChannels = await $axios
+                    .$get(`/api/v1/users/channels?server=${params.server}&id=${params.id}`, { headers })
+                filter.loading = false
+            }
+        })
+
+        function save() {
+            const headers = { Authorization: $auth.getToken('social')}
+            $axios.$put(`/api/v1/users/channels?server=${params.server}&id=${params.id}`, 
+                { channelIds: filter.selectedChannels }, 
+                { headers }
+            )
+            filter.snackbar = true
+        }
+
+        function hide() {
+            filter.show = false
+        }
 
         function followUser() {
             const headers = { Authorization: $auth.getToken('social') }
@@ -101,7 +192,7 @@ export default {
             }
         }
 
-        return { profile, followers, color, followUser }
+        return { profile, followers, color, followUser, filter, save, hide }
     }
 }
 </script>

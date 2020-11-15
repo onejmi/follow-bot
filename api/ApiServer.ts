@@ -5,10 +5,6 @@ import { Logger } from '@overnightjs/logger';
 import DiscordManager from './discord/bot-manager';
 import * as database from './data/database'
 
-// MODIFIED VERSION OF 
-// (https://gist.githubusercontent.com/seanpmaxwell/fb58c95f0adc055403445e03f4f499fb/raw/543ce8f8669d88bbeebd53df84f2b101e9876798/ExampleServer.ts) by
-// original author: https://github.com/seanpmaxwell
-
 class ApiServer extends Server {
 
     private readonly SERVER_STARTED = 'API server started on port: ';

@@ -5,7 +5,7 @@
 import { useContext } from '@nuxtjs/composition-api'
 export default {
     setup(props, context) {
-        const { $axios, $auth } = useContext()
+        const { $axios, $auth, store } = useContext()
         const user = $auth.user
         const token = $auth.getToken('social')
         $axios.$post('/api/v1/auth/login', { token: token })

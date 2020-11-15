@@ -1,9 +1,13 @@
-import { Controller, Get, Patch, Post } from "@overnightjs/core";
+import { ChildControllers, Controller, Get, Patch, Post, Put } from "@overnightjs/core";
 import { Request, Response } from 'express';
 import ApiServer from "../ApiServer";
-import { follow, getFollowMap, getSession } from "../data/database";
+import { follow, getFollowMap, getSessionId } from "../data/database";
+import { ChannelController } from "./ChannelController";
 
 @Controller('users')
+@ChildControllers([
+    new ChannelController()
+])
 export class UserController { 
 
     @Get(":server/members/:id")
@@ -29,7 +33,7 @@ export class UserController {
         const userId = req.params.id
         //const accessToken = req.headers.authorization
         if(req.headers.authorization != null) {
-            const newFollower = await getSession(req.headers.authorization)
+            const newFollower = await getSessionId(req.headers.authorization)
             if(newFollower != null) follow(serverId, newFollower, userId)
         }
         res.json({status: "Follow user attempted."})

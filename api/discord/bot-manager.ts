@@ -10,9 +10,18 @@ export default class DiscordManager {
         this._client = new Client()
     }
     
-    login() {
+    async login() {
         this.registerHandlers()
-        this._client.login(keys.discordToken)
+        await this._client.login(keys.discordToken)
+        this._client.user?.setPresence(
+            {
+                status: 'online',
+                activity: {
+                    name: 'heyfollow.club',
+                    type: 'WATCHING'
+                }
+            }
+        )
     }
 
     private registerHandlers() {
