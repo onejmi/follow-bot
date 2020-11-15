@@ -140,6 +140,7 @@ export default {
     setup() {
         //TODO create base url axios '/api/v1'
         //TODO organize filters into categories
+        const serverBase = 'http://157.230.14.97'
         const { route, $auth, $axios } = useContext()
         const params = route.value.params
         const profile = useAsync(async () => ref(await $axios.$get(`/api/v1/users/${params.server}/members/${params.id}`)))
@@ -162,16 +163,16 @@ export default {
             if(filter.show) {
                 const headers = { Authorization: $auth.getToken('social')}
                 filter.channels = 
-                    await $axios.$get(`/api/v1/users/channels/access?server=${params.server}`, { headers })
+                    await $axios.$get(`${serverBase}/api/v1/users/channels/access?server=${params.server}`, { headers })
                 filter.selectedChannels = await $axios
-                    .$get(`/api/v1/users/channels?server=${params.server}&id=${params.id}`, { headers })
+                    .$get(`${serverBase}/api/v1/users/channels?server=${params.server}&id=${params.id}`, { headers })
                 filter.loading = false
             }
         })
 
         function save() {
             const headers = { Authorization: $auth.getToken('social')}
-            $axios.$put(`/api/v1/users/channels?server=${params.server}&id=${params.id}`, 
+            $axios.$put(`${serverBase}/api/v1/users/channels?server=${params.server}&id=${params.id}`, 
                 { channelIds: filter.selectedChannels }, 
                 { headers }
             )
@@ -184,7 +185,7 @@ export default {
 
         function followUser() {
             const headers = { Authorization: $auth.getToken('social') }
-            $axios.$patch(`/api/v1/users/${params.server}/${params.id}/follow`, {}, { headers })
+            $axios.$patch(`${serverBase}/api/v1/users/${params.server}/${params.id}/follow`, {}, { headers })
             if(isFollowing.value) { 
                 followers.value.value = followers.value.value.filter(item => item !== $auth.user.id)
             } else {
