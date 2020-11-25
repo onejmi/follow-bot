@@ -164,6 +164,12 @@ export default {
                 const headers = { Authorization: $auth.getToken('social')}
                 filter.channels = 
                     await $axios.$get(`${serverBase}/api/v1/users/channels/access?server=${params.server}`, { headers })
+                filter.channels = filter.channels.map((chnl) => {
+                    if(chnl.category != null) {
+                        chnl.name += `(${chnl.category})`
+                    }
+                    return chnl
+                })
                 filter.selectedChannels = await $axios
                     .$get(`${serverBase}/api/v1/users/channels?server=${params.server}&id=${params.id}`, { headers })
                 filter.loading = false
