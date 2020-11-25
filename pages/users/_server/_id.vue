@@ -166,7 +166,7 @@ export default {
                     await $axios.$get(`${serverBase}/api/v1/users/channels/access?server=${params.server}`, { headers })
                 filter.channels = filter.channels.map((chnl) => {
                     if(chnl.category != null) {
-                        chnl.name += `(${chnl.category})`
+                        chnl.name = '#' + chnl.name + ` (${chnl.category})`
                     }
                     return chnl
                 })
