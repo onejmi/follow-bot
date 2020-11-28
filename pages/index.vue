@@ -2,7 +2,7 @@
   <v-container fluid fill-height>
     <v-row class="justify-center align-center">
       <v-col md="4" class="align-center"> 
-        <v-card class="pa-3" raised>
+        <v-card class="pa-6" raised>
           <v-card-text>
             <v-row>
               <v-col md="5">
@@ -29,11 +29,15 @@
           </v-card-text>
           <v-card-actions>
             <v-btn color="teal" @click="$router.push('/login')">
-            Login
+              Login
             </v-btn>
             <v-btn color="purple" href="https://discord.com/oauth2/authorize?client_id=764557927360102400&scope=bot&permissions=68608">
-              Invite
-              <v-icon class="ml-1">mdi-discord</v-icon>
+                Invite
+                <v-icon class="ml-1">mdi-discord</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn color="cyan" href="https://twitter.com/heyfollowclub">
+              <v-icon>mdi-twitter</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
