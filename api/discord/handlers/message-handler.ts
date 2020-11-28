@@ -45,11 +45,11 @@ export async function handleMessage(message: Message) {
                         embed.setAuthor(
                             message.author.username, 
                             message.author.avatarURL() ?? message.author.defaultAvatarURL, 
-                            `http://157.230.14.97/users/${serverId}/${targetId}`
+                            `https://heyfollow.live/users/${serverId}/${targetId}`
                             )
                         const date = new Date(message.createdTimestamp)
                         embed.addField('Posted', date.toString())
-                        embed.setFooter('heyfollow.club')
+                        embed.setFooter('heyfollow.live')
                         follower?.send(embed)
                     }
                 }

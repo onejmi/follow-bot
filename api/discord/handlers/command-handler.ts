@@ -24,7 +24,7 @@ export async function handleCommand(message: Message, command: string, args: str
         let image = target.user.avatarURL()?.toString() ?? target.user.defaultAvatarURL
         const followEmbed = new MessageEmbed()
             .setTitle("Follow " + target.displayName)
-            .setURL(`http://157.230.14.97/users/${message.guild.id}/${targetId}`)
+            .setURL(`https://heyfollow.live/users/${message.guild.id}/${targetId}`)
             .setImage(image)
        
        message.channel.send(followEmbed)

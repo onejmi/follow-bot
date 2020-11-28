@@ -36,7 +36,7 @@
                 <v-icon class="ml-1">mdi-discord</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="cyan" href="https://twitter.com/heyfollowclub">
+            <v-btn color="cyan" href="https://twitter.com/heyfollowbot">
               <v-icon>mdi-twitter</v-icon>
             </v-btn>
           </v-card-actions>
