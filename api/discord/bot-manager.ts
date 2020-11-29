@@ -17,7 +17,7 @@ export default class DiscordManager {
             {
                 status: 'online',
                 activity: {
-                    name: 'heyfollow.club',
+                    name: 'heyfollow.live',
                     type: 'WATCHING'
                 }
             }
