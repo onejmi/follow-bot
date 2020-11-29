@@ -140,7 +140,7 @@ export default {
     setup() {
         //TODO create base url axios '/api/v1'
         //TODO organize filters into categories
-        const serverBase = 'http://157.230.14.97'
+        const serverBase = 'https://heyfollow.live'
         const { route, $auth, $axios } = useContext()
         const params = route.value.params
         const profile = useAsync(async () => ref(await $axios.$get(`/api/v1/users/${params.server}/members/${params.id}`)))
