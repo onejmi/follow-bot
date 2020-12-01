@@ -1,17 +1,25 @@
 <template>
     <v-container>
-        <v-card>
-            <v-card-title>Please login here!</v-card-title>
-            <v-card-actions>
-                <v-btn success @click="login">Login</v-btn>
-            </v-card-actions>
-        </v-card>
+        <v-row class="justify-center align-center">
+            <v-col md="4">
+                <v-card>
+                    <v-card-title>Please login here!</v-card-title>
+                    <v-card-actions>
+                        <v-btn color="success" @click="login">Login</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script>
 export default {
-    setup() {
+    layout: 'skeleton',
+    setup(props, context) {
+        if(this.$auth.loggedIn) {
+            context.root.$router.replace('/')
+        }
         function login() {
             this.$auth.loginWith('social')
         }
