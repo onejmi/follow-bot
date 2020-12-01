@@ -16,9 +16,9 @@
 <script>
 export default {
     layout: 'skeleton',
-    setup(props, context) {
+    setup() {
         if(this.$auth.loggedIn) {
-            context.root.$router.replace('/')
+            this.$router.replace('/')
         }
         function login() {
             this.$auth.loginWith('social')
