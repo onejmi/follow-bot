@@ -14,14 +14,16 @@
 </template>
 
 <script>
+import { useContext } from '@nuxtjs/composition-api' 
 export default {
     layout: 'skeleton',
-    setup() {
-        if(this.$auth.loggedIn) {
-            this.$router.replace('/')
+    setup(setup, context) {
+        const { route, $auth } = useContext()
+        if($auth.loggedIn) {
+            context.root.$router.replace('/')
         }
         function login() {
-            this.$auth.loginWith('social')
+            $auth.loginWith('social')
         }
 
         return { login }
