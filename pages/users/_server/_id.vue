@@ -44,6 +44,7 @@
                     class="mt-6"
                     :color="color"
                     @click="followUser"
+                    :disabled="$auth.user.id == $route.params.id"
                     >
                     {{ followers.value.includes($auth.user.id) ? 'unfollow' : 'follow' }}
                     </v-btn>
