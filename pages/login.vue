@@ -3,9 +3,12 @@
         <v-row class="justify-center align-center">
             <v-col md="4">
                 <v-card>
-                    <v-card-title>Please login here!</v-card-title>
-                    <v-card-actions>
-                        <v-btn color="success" @click="login">Login</v-btn>
+                    <v-card-title>Login</v-card-title>
+                    <v-card-actions class="align-center">
+                        <v-btn color="success" @click="login"> 
+                            Login with Discord 
+                            <v-icon>mdi-discord</v-icon>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
