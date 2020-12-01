@@ -22,7 +22,7 @@ export class UserController {
         const serverId = req.params.server
         const userId = req.params.id
         const followMap = await getFollowMap(serverId)
-        const followers = followMap[userId]
+        const followers = followMap == null ? null : followMap[userId]
         res.json(followers ?? [])
     }
 
