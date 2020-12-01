@@ -28,7 +28,10 @@
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="teal" @click="$router.push('/login')">
+            <v-btn color="yellow" @click="$auth.logout()" v-if="$auth.loggedIn">
+              Logout
+            </v-btn>
+            <v-btn color="teal" @click="$router.push('/login')" v-else>
               Login
             </v-btn>
             <v-btn color="purple" href="https://discord.com/oauth2/authorize?client_id=764557927360102400&scope=bot&permissions=68608">
