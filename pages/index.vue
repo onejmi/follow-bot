@@ -28,7 +28,7 @@
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="yellow" @click="$auth.logout()" v-if="$auth.loggedIn">
+            <v-btn color="error" @click="$auth.logout()" v-if="$auth.loggedIn">
               Logout
             </v-btn>
             <v-btn color="teal" @click="$router.push('/login')" v-else>
