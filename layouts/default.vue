@@ -23,11 +23,12 @@
 <script>
 import { useContext } from '@nuxtjs/composition-api'
 export default {
-  setup() {
+  setup(props, context) {
     const { $auth, $axios } = useContext()
     function logout() {
       $axios.$post('/api/v1/auth/logout', { token: $auth.getToken('social') })
       $auth.logout()
+      context.root.$router.replace('/')
     }
 
     return { logout }

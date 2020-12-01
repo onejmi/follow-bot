@@ -62,7 +62,7 @@ export default {
   setup() {
     const { $axios } = useContext()
     const serverCount = useAsync(async () => {
-            const val = await $axios.$get(`/api/v1/status/servers/count`)
+            const val = await $axios.$get(`https://heyfollow.live/api/v1/status/servers/count`)
             return ref(val)
         })
 
