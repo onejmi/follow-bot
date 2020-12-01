@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <v-row class="justify-center align-center">
+    <v-container fluid fill-height>
+        <v-row class="justify-center align-center" fill-height>
             <v-col md="4">
                 <v-card>
                     <v-card-title>Login</v-card-title>
