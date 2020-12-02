@@ -1,7 +1,7 @@
 <template>
     <v-container fluid fill-height>
-        <v-row class="justify-center align-center" fill-height>
-            <v-col md="4" class="align-center">
+        <v-row class="text-center justify-center">
+            <v-col>
                 <v-btn color="success" @click="login"> 
                     Login with Discord 
                     <v-icon class="ml-1">mdi-discord</v-icon>
