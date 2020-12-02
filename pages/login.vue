@@ -2,7 +2,7 @@
     <v-container fluid fill-height>
         <v-row class="text-center justify-center">
             <v-col>
-                <v-btn color="success" @click="login"> 
+                <v-btn color="success" @click="login" class="pa-5"> 
                     Login with Discord 
                     <v-icon class="ml-1">mdi-discord</v-icon>
                 </v-btn>
