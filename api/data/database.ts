@@ -5,6 +5,7 @@
 import { dbPassword, dbName, dbUser } from './credentials'
 import { MongoClient } from 'mongodb'
 import { FilterDataStore } from './filter-data'
+import ApiServer from '../ApiServer'
 
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@cluster0.jlsao.mongodb.net/${dbName}?retryWrites=true&w=majority`
 let client = new MongoClient(uri, { useNewUrlParser: true })
@@ -42,11 +43,13 @@ export async function begin() {
 }
 
 export async function follow(serverId: string, fromId: string, toId: string) {
+    const discord = ApiServer.getDiscord()
     let followMap = await getFollowMap(serverId)
     if(followMap == null) followMap = new Map()
     if(!followMap[toId]) {
         followMap[toId] = [fromId]
         setFollowMap(serverId, followMap)
+        discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
         return true
     }
     if(followMap[toId]?.includes(fromId)) {
