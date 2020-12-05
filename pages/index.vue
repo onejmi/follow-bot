@@ -2,7 +2,7 @@
   <v-container fluid fill-height>
     <v-row class="justify-center align-center">
       <v-col md="4" class="align-center"> 
-        <v-card class="pa-6" raised max-width="300">
+        <v-card class="pa-6" raised max-width="400">
           <v-card-text>
             <v-row>
               <v-col md="5">
