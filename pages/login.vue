@@ -15,11 +15,9 @@
 import { useContext } from '@nuxtjs/composition-api' 
 export default {
     layout: 'skeleton',
+    middleware: ['loggedIn'],
     setup(setup, context) {
         const { route, $auth } = useContext()
-        if($auth.loggedIn) {
-            context.root.$router.replace('/')
-        }
         function login() {
             $auth.loginWith('social')
         }

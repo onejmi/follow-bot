@@ -4,6 +4,7 @@
 <script>
 import { useContext } from '@nuxtjs/composition-api'
 export default {
+    layout: 'skeleton',
     setup(props, context) {
         const { $axios, $auth, store } = useContext()
         const user = $auth.user
