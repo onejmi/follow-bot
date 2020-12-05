@@ -6,6 +6,7 @@ import { dbPassword, dbName, dbUser } from './credentials'
 import { MongoClient } from 'mongodb'
 import { FilterDataStore } from './filter-data'
 import ApiServer from '../ApiServer'
+import { MessageEmbed } from 'discord.js'
 
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@cluster0.jlsao.mongodb.net/${dbName}?retryWrites=true&w=majority`
 let client = new MongoClient(uri, { useNewUrlParser: true })
@@ -49,7 +50,12 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     if(!followMap[toId]) {
         followMap[toId] = [fromId]
         setFollowMap(serverId, followMap)
-        discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
+        const guild = discord.client.guilds.cache.get(serverId)
+        const embed = new MessageEmbed()
+        embed.setTitle('New Follow (' + guild?.name + ')')
+        embed.setDescription(guild?.members.cache.get(fromId)?.displayName + ' followed you.')
+        embed.setFooter('heyfollow.live')
+        guild?.members.cache.get(toId)?.send(embed)
         return true
     }
     if(followMap[toId]?.includes(fromId)) {
