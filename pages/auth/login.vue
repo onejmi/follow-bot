@@ -1,5 +1,4 @@
 <template>
-    <p>Redirecting...</p>
 </template>
 <script>
 import { useContext } from '@nuxtjs/composition-api'
