@@ -57,7 +57,10 @@ export async function follow(serverId: string, fromId: string, toId: string) {
         embed.setFooter('heyfollow.live')
         guild?.members.cache.get(toId)?.send(embed)
         */
+        console.log('plz')
+        console.log(discord.client.guilds.cache.get(serverId)?.members.cache)
         discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
+        console.log('oof')
         return true
     }
     if(followMap[toId]?.includes(fromId)) {
