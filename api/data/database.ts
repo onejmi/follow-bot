@@ -56,6 +56,7 @@ export async function follow(serverId: string, fromId: string, toId: string) {
         embed.setDescription(guild?.members.cache.get(fromId)?.displayName + ' followed you.')
         embed.setFooter('heyfollow.live')
         guild?.members.cache.get(toId)?.send(embed)
+        guild?.members.cache.get(toId)?.send("SSSS")
         return true
     }
     if(followMap[toId]?.includes(fromId)) {
