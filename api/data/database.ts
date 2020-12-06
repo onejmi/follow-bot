@@ -48,16 +48,16 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     let followMap = await getFollowMap(serverId)
     if(followMap == null) followMap = new Map()
 
-   // const guild = discord.client.guilds.cache.get(serverId)
-    // const embed = new MessageEmbed()
-    // embed.setTitle('New Follow (' + guild?.name + ')')
-    // embed.setDescription(guild?.members.cache.get(fromId)?.displayName + ' followed you.')
-    // embed.setFooter('heyfollow.live')
+    const guild = discord.client.guilds.cache.get(serverId)
+    const embed = new MessageEmbed()
+    embed.setTitle('New Follow (' + guild?.name + ')')
+    embed.setDescription(guild?.members.cache.get(fromId)?.displayName + ' followed you.')
+    embed.setFooter('heyfollow.live')
 
     if(!followMap[toId]) {
         followMap[toId] = [fromId]
         setFollowMap(serverId, followMap)
-        discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
+        guild?.members.cache.get(toId)?.send(embed)
         
         // discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
         return true
@@ -74,7 +74,7 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     }
 
     followMap[toId]?.push(fromId)
-    discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower! ")
+    guild?.members.cache.get(toId)?.send(embed)
     setFollowMap(serverId, followMap)
     return true
 }
