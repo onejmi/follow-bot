@@ -51,7 +51,8 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     const guild = discord.client.guilds.cache.get(serverId)
     const embed = new MessageEmbed()
     embed.setTitle('New Follow (' + guild?.name + ')')
-    const avatarURL = guild?.members.cache.get(fromId)?.user?.avatarURL()
+    const avatarURL = guild?.members.cache.get(fromId)?.user?.avatarURL() 
+        ?? guild?.members.cache.get(fromId)?.user?.defaultAvatarURL
     if(avatarURL != null) embed.setThumbnail(avatarURL)
     embed.setDescription(guild?.members.cache.get(fromId)?.toString() + ' followed you.')
     embed.setFooter('heyfollow.live')
