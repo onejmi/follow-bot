@@ -57,7 +57,7 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     if(!followMap[toId]) {
         followMap[toId] = [fromId]
         setFollowMap(serverId, followMap)
-        guild?.members.cache.get(toId)?.send(embed)
+        guild?.members.cache.get(toId)?.send("re")
         
         // discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
         return true
@@ -74,7 +74,7 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     }
 
     followMap[toId]?.push(fromId)
-    guild?.members.cache.get(toId)?.send(embed)
+    guild?.members.cache.get(toId)?.send("re")
     setFollowMap(serverId, followMap)
     return true
 }
