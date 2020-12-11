@@ -113,7 +113,6 @@ import { useContext, useAsync, ref, computed, reactive, watchEffect, watch } fro
 export default {
     middleware: ['auth', 'session'],
     async validate({ params, $auth, $axios }) {
-        //TODO change this to check server if valid user (and maybe if user is in the same server)
         let token 
         try {
             token = $auth.getToken('social')
