@@ -29,4 +29,17 @@ export async function handleCommand(message: Message, command: string, args: str
        
        message.channel.send(followEmbed)
     }
+    else if(command == "help") {
+        const helpEmbed = new MessageEmbed({
+            "title": "HeyFollowers Help 🔎",
+            "description": "Here's a list of useful things to know!\n\n__**Commands**__\n\n`!follow <user>` links a member's account to follow / unfollow\n`!help` How to use HeyFollowers",
+            "footer": {
+              "text": "heyfollow.live"
+            },
+            "thumbnail": {
+              "url": "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_28937.png&f=1&nofb=1"
+            }
+          })
+        message.channel.send(helpEmbed)
+    }
 }
