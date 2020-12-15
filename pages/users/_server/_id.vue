@@ -196,6 +196,10 @@ export default {
                 followers.value.value = followers.value.value.filter(item => item !== $auth.user.id)
             } else {
                 followers.value.value.push($auth.user.id)
+                filter.channels = 
+                    await $axios.$get(`${serverBase}/api/v1/users/channels/access?server=${params.server}`, { headers })
+                filter.selectedChannels = filter.channels.map(chnl => chnl.id)
+                save()
             }
         }
 
