@@ -24,7 +24,7 @@ export async function handleCommand(message: Message, command: string, args: str
                 return
             }
             if(!args[1].startsWith('<') || !args[1].endsWith('>')) {
-                message.channel.send(new MessageEmbed({ "description": "Invalid user!", "color": "red" }))
+                message.channel.send(new MessageEmbed({ "description": "Invalid user!", "color": "#FF0000" }))
                 return
             }
             if(message.guild == null) {
