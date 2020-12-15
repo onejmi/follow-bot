@@ -189,7 +189,7 @@ export default {
             filter.show = false
         }
 
-        function followUser() {
+        async function followUser() {
             const headers = { Authorization: $auth.getToken('social') }
             $axios.$patch(`${serverBase}/api/v1/users/${params.server}/${params.id}/follow`, {}, { headers })
             if(isFollowing.value) { 
