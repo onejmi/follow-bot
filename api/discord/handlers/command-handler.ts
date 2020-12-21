@@ -1,11 +1,12 @@
 import { Message, MessageEmbed } from 'discord.js';
+import { getFollowMap } from '../../data/database'
 
 
 export async function handleCommand(message: Message, command: string, args: string[]) {
     const prefix = "hf"
     const helpEmbed = new MessageEmbed({
         "title": "HeyFollowers Help 🔎",
-        "description": "Here's a list of useful things to know!\n\n__**Commands**__\n\n`!hf follow <user>` links a member's account to follow / unfollow\n`!hf help` How to use HeyFollowers",
+        "description": "Here's a list of useful things to know!\n\n__**Commands**__\n\n`!hf follow <user>` links a member's account to follow / unfollow\n`!hf followers` Displays your follow count\n`!hf help` How to use HeyFollowers",
         "footer": {
           "text": "heyfollow.live"
         },
@@ -45,6 +46,21 @@ export async function handleCommand(message: Message, command: string, args: str
         }
         else if(args[0] == "help") {
             message.channel.send(helpEmbed)
+        }
+        else if(args[0] == "followers") {
+            if(message.guild != null) {
+                const followMap = await getFollowMap(message.guild.id)
+                const followers = followMap[message.author.id]
+                let followCount = 0
+                if(followers != null) followCount = followers.length
+
+                const followCountEmbed = new MessageEmbed()
+                    .setTitle("Follow Count")
+                    .setDescription(`You have ${followCount} follower${followCount != 1 ? 's' : ''}!`)
+                    .setColor('#0099ff')
+                
+                message.channel.send(followCountEmbed)
+            }  
         }
     }
 }
