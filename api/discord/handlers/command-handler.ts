@@ -1,12 +1,12 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { getFollowMap } from '../../data/database'
+import { getFollowMap, setFollowNotifications } from '../../data/database'
 
 
 export async function handleCommand(message: Message, command: string, args: string[]) {
     const prefix = "hf"
     const helpEmbed = new MessageEmbed({
         "title": "HeyFollowers Help 🔎",
-        "description": "Here's a list of useful things to know!\n\n__**Commands**__\n\n`!hf follow <user>` links a member's account to follow / unfollow\n`!hf followers` Displays your follow count\n`!hf help` How to use HeyFollowers",
+        "description": "Here's a list of useful things to know!\n\n__**Commands**__\n\n`!hf follow <user>` Links a member's account to follow / unfollow\n`!hf followers` Displays your follow count\n`!hf mute/unmute` Toggle follower notifications\n`!hf help` How to use HeyFollowers",
         "footer": {
           "text": "heyfollow.live"
         },
@@ -57,6 +57,30 @@ export async function handleCommand(message: Message, command: string, args: str
                 const followCountEmbed = new MessageEmbed()
                     .setTitle("Follow Count")
                     .setDescription(`You have ${followCount} follower${followCount != 1 ? 's' : ''}!`)
+                    .setColor('#0099ff')
+                
+                message.channel.send(followCountEmbed)
+            }  
+        }
+        else if(args[0] == "mute") {
+            if(message.guild != null) {
+                setFollowNotifications(message.author.id, false)
+
+                const followCountEmbed = new MessageEmbed()
+                    .setTitle("Notification Settings")
+                    .setDescription("Successfully muted follow notifications")
+                    .setColor('#0099ff')
+                
+                message.channel.send(followCountEmbed)
+            }  
+        }
+        else if(args[0] == "unmute") {
+            if(message.guild != null) {
+                setFollowNotifications(message.author.id, true)
+
+                const followCountEmbed = new MessageEmbed()
+                    .setTitle("Notification Settings")
+                    .setDescription("Successfully unmuted follow notifications")
                     .setColor('#0099ff')
                 
                 message.channel.send(followCountEmbed)

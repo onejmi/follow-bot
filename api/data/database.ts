@@ -39,6 +39,17 @@ export function setFollowMap(serverId: string, followMap: Map<string, string[]>)
         .updateOne({ 'serverId' : serverId }, { $set: { 'followMap' : followMap } }, { upsert: true })
 }
 
+export async function setFollowNotifications(userId: string, state: boolean) {
+    await client.db()
+            .collection('users')
+            .updateOne({ userId: userId }, { $set: { followAlerts: state } }, { upsert: true })
+}
+
+export async function userWantsAlert(userId: string) {
+    const user = await client.db().collection('users').findOne({userId: userId})
+    return user.followAlerts
+}
+
 export async function begin() {
     client = await client.connect()
 }
@@ -60,7 +71,9 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     if(!followMap[toId]) {
         followMap[toId] = [fromId]
         setFollowMap(serverId, followMap)
-        guild?.members.cache.get(toId)?.send(embed)
+        if(userWantsAlert(toId)) {
+            guild?.members.cache.get(toId)?.send(embed)
+        }
         
         // discord.client.guilds.cache.get(serverId)?.members.cache.get(toId)?.send("You have a new follower!")
         return true
