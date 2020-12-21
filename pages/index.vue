@@ -6,7 +6,7 @@
           <v-card-text>
             <v-row>
               <v-col md="5">
-                <v-img src="img/chick-pink.jpg" width="128" height="128" style="border-radius: 50%">
+                <v-img src="img/chick-pink.png" width="128" height="128" style="border-radius: 50%">
                   <template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"
