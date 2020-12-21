@@ -176,13 +176,13 @@ export default {
             }
         })
 
-        function save() {
+        function save(showSnackbar = true) {
             const headers = { Authorization: $auth.getToken('social')}
             $axios.$put(`${serverBase}/api/v1/users/channels?server=${params.server}&id=${params.id}`, 
                 { channelIds: filter.selectedChannels }, 
                 { headers }
             )
-            filter.snackbar = true
+            if(showSnackbar) filter.snackbar = true
         }
 
         function hide() {
@@ -199,7 +199,7 @@ export default {
                 filter.channels = 
                     await $axios.$get(`${serverBase}/api/v1/users/channels/access?server=${params.server}`, { headers })
                 filter.selectedChannels = filter.channels.map(chnl => chnl.id)
-                save()
+                save(false)
             }
         }
 
