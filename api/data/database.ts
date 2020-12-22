@@ -45,9 +45,9 @@ export async function setFollowNotifications(userId: string, state: boolean) {
             .updateOne({ userId: userId }, { $set: { followAlerts: state } }, { upsert: true })
 }
 
-export async function userWantsAlert(userId: string) {
+export async function userIgnoresAlert(userId: string) {
     const user = await client.db().collection('users').findOne({userId: userId})
-    return user.followAlerts
+    return !user.followAlerts
 }
 
 export async function begin() {
@@ -66,12 +66,12 @@ export async function follow(serverId: string, fromId: string, toId: string) {
         ?? guild?.members.cache.get(fromId)?.user?.defaultAvatarURL
     if(avatarURL != null) embed.setThumbnail(avatarURL)
     embed.setDescription(guild?.members.cache.get(fromId)?.toString() + ' followed you.')
-    embed.setFooter('heyfollow.live')
+    embed.setFooter('Mute these alerts with !hf mute')
 
     if(!followMap[toId]) {
         followMap[toId] = [fromId]
         setFollowMap(serverId, followMap)
-        if(userWantsAlert(toId)) {
+        if(!userIgnoresAlert(toId)) {
             guild?.members.cache.get(toId)?.send(embed)
         }
         
@@ -90,7 +90,7 @@ export async function follow(serverId: string, fromId: string, toId: string) {
     }
 
     followMap[toId]?.push(fromId)
-    guild?.members.cache.get(toId)?.send(embed)
+    if(!userIgnoresAlert(toId)) guild?.members.cache.get(toId)?.send(embed)
     setFollowMap(serverId, followMap)
     return true
 }
