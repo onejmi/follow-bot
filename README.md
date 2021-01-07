@@ -1,4 +1,4 @@
-# followers-bot
+# HeyFollowers!
 
 ## Check out our TOP.GG page for information.
 
