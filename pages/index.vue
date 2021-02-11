@@ -22,7 +22,7 @@
                 <h1>HeyFollowers!</h1>
                 <p class="mt-6" style="color: white; font-size: 1.3em">Follow members of your guild 🔥</p>
                 <p class="mt-6" style="font-size: 1.2em">
-                  Chilling on <strong style="color: cyan">{{ serverCount.value.count }}</strong> servers
+                  Currently serving <strong style="color: cyan">{{ serverCount.value.count }}</strong> servers
                 </p>
               </v-col>
             </v-row>
